@@ -4,9 +4,9 @@ import json
 import pytest
 from unittest.mock import Mock, patch
 
-from gc2 import gc2
+from gc2 import Gc2
 
-from mock.gc2_mock import GC2_BASEURL
+from .mock.gc2_mock import GC2_BASEURL
 
 
 class TestGc2Auth(object):
@@ -20,8 +20,8 @@ class TestGc2Auth(object):
     #     cls.mock_get_patcher.stop()
 
     def test_gc2_base(self):
-        testgc2 = gc2.Gc2(GC2_BASEURL)
-        assert isinstance(testgc2, gc2.Gc2)
+        testgc2 = Gc2(GC2_BASEURL)
+        assert isinstance(testgc2, Gc2)
 
     def test_auth(self):
         """Test the authentication setting."""
@@ -29,11 +29,11 @@ class TestGc2Auth(object):
         # self.mock_get.return_value.status_code = 401
         # self.mock_get.return_value.text = json.dumps(version_resp_text)
 
-        testgc2= gc2.Gc2(GC2_BASEURL)
-        assert isinstance(testgc2, gc2.Gc2)
+        testgc2 = Gc2(GC2_BASEURL)
+        assert isinstance(testgc2, Gc2)
 
         try:
-            testgc2.set_authentication("myd", "hawk2000")
+            testgc2.set_authentication("mydb", "hawk2000")
         except Exception as e:
             raise pytest.fail(f"Authentication raises: {e}")
 

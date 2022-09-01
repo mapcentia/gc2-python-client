@@ -10,7 +10,7 @@ class Gc2:
             user=None,
             pw=None,
     ):
-        self.api_prefix = api_version
+        self.api_version = api_version
         self.base_url = url
         self.headers = {"content-type": "application/json; charset=utf-8"}
         self.user = None
@@ -18,22 +18,19 @@ class Gc2:
         self.__auth = None
         if user and pw:
             self.set_authentication(user, pw)
-        self.locations = dict()
         self.__set_url()
-        # self.__check_version()
-        self.jobs = dict()
 
     def __set_url(self):
-        self.url = f"{self.base_url}/api/{self.api_prefix}"
+        self.url = f"{self.base_url}/api/{self.api_version}"
 
     def __check_auth(self):
         url = f"{self.url}/oauth/token"
         resp = requests.post(url, '{"grant_type": "password","username": "mydb","password": "hawk2000","database": "mydb","client_id": "xxxxxxxxxx","client_secret": "xxxxxxxxxx"}')
-        if resp.status_code == 400:
+        if resp.status_code != 200:
             raise Exception(
                 "Wrong user or password. Please check your inputs."
             )
-        elif resp.status_code != 200:
+        elif resp.status_code == 400:
             raise Exception(f"Error {resp.status_code}: {resp.text}")
         else:
             logging.info(f"{self.user} is logged in.")
