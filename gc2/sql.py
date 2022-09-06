@@ -11,8 +11,9 @@ class Sql:
     ):
         self.__gc2 = gc2
         self.__url = f"{gc2.url}/sql"
-        self.table = None
+        self.rows = None
         self.geojson = None
+        self.columns = None
 
     def run(self, sql=None):
         req = {
@@ -32,15 +33,16 @@ class Sql:
             res = json.loads(resp.text)
             table = []
             row = []
-            # Add header to table
+            # Columns
             for p in res["forGrid"]:
-                row.append(p["header"])
-            table.append(row)
+                if p["type"] != "geometry":
+                    row.append(p["header"])
+            self.columns = row
             # Add rows
             for p in res["features"]:
                 row = []
                 for v in p["properties"]:
                     row.append(p["properties"][v])
                 table.append(row)
-            self.table = table
+            self.rows = table
             return
