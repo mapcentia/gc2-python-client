@@ -11,7 +11,7 @@ class Sql:
     ):
         self.__gc2 = gc2
         self.__url = f"{gc2.url}/sql"
-        self.rows = None
+        self.data = None
         self.geojson = None
         self.columns = None
 
@@ -44,5 +44,5 @@ class Sql:
                 for v in p["properties"]:
                     row.append(p["properties"][v])
                 table.append(row)
-            self.rows = table
+            self.data = table
             return
