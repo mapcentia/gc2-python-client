@@ -35,14 +35,14 @@ class Sql:
             row = []
             # Columns
             for p in res["forGrid"]:
-                if p["type"] != "geometry":
-                    row.append(p["header"])
+                row.append(p["header"])
             self.columns = row
             # Add rows
             for p in res["features"]:
                 row = []
                 for v in p["properties"]:
                     row.append(p["properties"][v])
+                row.append(json.dumps(p["geometry"]))
                 table.append(row)
             self.data = table
             return
