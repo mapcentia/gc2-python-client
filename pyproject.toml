@@ -1,6 +1,6 @@
 [project]
 name = "gc2-python-client"
-version = "2023.5.1"
+version = "2024.3.0"
 authors = [
   { name="Martin Høgh", email="mh@mapcentia.com" },
 ]
